@@ -49,3 +49,25 @@ pub trait High {
 pub trait Volume {
     fn volume(&self) -> f64;
 }
+
+pub trait CandleLike: Open + Close + High + Low {
+    fn is_red(&self) -> bool {
+        self.close() < self.open()
+    }
+    fn is_green(&self) -> bool {
+        !self.is_red()
+    }
+    fn body(&self) -> f64 {
+        (self.open() - self.close()).abs()
+    }
+}
+#[cfg(test)]
+pub mod tests {
+    use crate::{test_helper::Bar, CandleLike};
+    #[test]
+    fn test_candlelike() {
+        let candle = candle!(10.0, 60, 5, 40, 100);
+        assert!(candle.is_green());
+        assert_eq!(candle.body(), 30.0);
+    }
+}

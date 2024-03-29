@@ -1,12 +1,14 @@
+use crate::CandleLike;
+
 use super::{Close, High, Low, Open, Volume};
 
 #[derive(Debug, PartialEq)]
 pub struct Bar {
-    open: f64,
-    high: f64,
-    low: f64,
-    close: f64,
-    volume: f64,
+    pub open: f64,
+    pub high: f64,
+    pub low: f64,
+    pub close: f64,
+    pub volume: f64,
 }
 
 impl Bar {
@@ -75,6 +77,7 @@ impl Volume for Bar {
         self.volume
     }
 }
+impl CandleLike for Bar {}
 
 pub fn round(num: f64) -> f64 {
     (num * 1000.0).round() / 1000.00
@@ -101,6 +104,18 @@ macro_rules! test_indicator {
 
             // ensure Display is implemented
             format!("{}", indicator);
+        }
+    };
+}
+
+macro_rules! candle {
+    ($o:expr,$h:expr,$l:expr,$c:expr,$v:expr) => {
+        Bar {
+            open: $o.into(),
+            close: $c.into(),
+            high: $h.into(),
+            low: $l.into(),
+            volume: $v.into(),
         }
     };
 }

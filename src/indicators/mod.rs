@@ -67,3 +67,6 @@ pub use self::money_flow_index::MoneyFlowIndex;
 
 mod on_balance_volume;
 pub use self::on_balance_volume::OnBalanceVolume;
+
+mod heiken_ashi;
+pub use self::heiken_ashi::{candle_color, CandleColor, HeikenAshi, HeikenAshiOutput};
